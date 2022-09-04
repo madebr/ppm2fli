@@ -1,0 +1,189 @@
+.TH UNFLICK 1 "11 January 2002"
+.SH NAME
+unflick \- extract images from a FLI/FLC file
+.SH SYNOPSIS
+.B unflick
+[
+.B \-a
+|
+.B \-m
+]
+[
+.BI \-b " begin"
+]
+[
+.BI \-n " max"
+]
+[ 
+.B \-v
+]
+[
+.BI \-f " filter"
+]
+.I animation
+.I base
+[
+.I extension
+]
+.LP
+.SH DESCRIPTION
+The program
+.B unflick
+extracts single images or a series of images from a given 
+FLI-animation.
+The extracted images are stored in separated files. 
+The formats PPM (raw and ascii) and FBM (mapped 8bpp) 
+are available.
+Additionally
+.B unflick 
+can call an external filter program to convert the output 
+in another file format.
+The file
+.I animation
+contains the input FLI-animation. 
+The output file names are controlled by the parameters
+.I base 
+and
+.IR extension .
+.LP
+If the parameter 
+.I extension
+is omitted, 
+the names of the generated files are composed of the 
+given 
+.I base 
+followed by a dot and a number field:
+.IP
+.nf
+.IR base .001,
+.IR base .002,
+.IR base .003,
+etc.
+.fi
+.LP
+The number indicates the position at which the image appears 
+in the FLI-animation.
+Note that when the input animation has more than 999 frames 
+automatically more digits are used in the number field of the
+file names. 
+.LP
+In the case of a given 
+.IR extension ,
+the file names consist of the
+.IR base ,
+directly followed by the number field, plus a
+dot and the given extension:
+.IP
+.nf
+.IR base 001. extension ,
+.IR base 002. extension ,
+.IR base 003. extension ,
+etc.
+.fi
+.LP
+Before a image is written to disk,
+the program tests if a file with the designated name already exists. 
+In this case the old file is not overwritten and the program 
+terminates with an error.
+.SH OPTIONS
+.TP
+.B \-a
+Write the images in PPM ascii format instead of PPM raw.
+Note that this needs much more disk space.
+.TP
+.BI \-b " begin"
+Only the images with the number
+.I begin
+or higher are extracted. 
+By default the extraction starts with the first image.
+.TP
+.B \-m
+Write the images in mapped FBM format.
+Then they can be converted to other formats with the utilities
+of the FBM package.
+.TP
+.BI \-n " max"
+Extract not more than
+.I max
+images. 
+By default all images from the 
+given beginning up to the end are extracted. 
+With this option it is possible to extract only a part 
+of the images. 
+.TP
+.B \-v
+Write some information about the processed FLI-file to
+.IR stdout .
+.TP
+.BI \-f " filter"
+Postprocess the output with the 
+specified filter. The writing is done using the
+.I popen
+subroutine.
+This can be used to store the images in other file formats
+than PPM of FBM, 
+or to write directly compressed files. 
+.RE
+.SH EXAMPLES
+For example we want to extract all images from the FLI-animation
+`nicefilm.fli'.
+And we want that the images are written in PPM-ascii format.
+In this case we give the command:
+.PP
+.nf
+	% unflick -a nicefilm.fli picture
+.fi
+.LP
+The output files have the names
+.PP
+.nf
+	picture.001, picture.002, picture.003, ...
+.fi
+.LP
+In the second example we assume that the utility 
+.B ppmtogif
+of the PBMPLUS package is available.
+We extract all images and write them in GIF format
+using the command line
+.PP
+.nf
+	% unflick -fppmtogif nicefilm.fli pic gif
+.fi
+.LP
+The names of the images are 
+.PP
+.nf
+	pic001.gif, pic002.gif, pic003.gif, ...
+.fi
+.LP
+If we have the FBM package instead of PBMPLUS, we can use the 
+.B fbcat
+utility.
+This filter reads FBM and can write several formats. 
+To extract images in GIF format we type
+.PP
+.nf
+	% unflick -m -f "fbcat -G" nicefilm.fli pic gif
+.fi
+.LP
+In the last example 
+we are interested only in the 10th image of the FLI-animation. 
+We wish the output image in gzipped PPM-raw format. 
+To do this we type the command:
+.PP
+.nf
+	% unflick -b 10 -n 1 -fgzip nicefilm.fli pic ppm.gz
+.fi
+.LP
+The output file has the name `pic010.ppm.gz'.
+.SH SEE ALSO
+.BR ppm2fli (1)
+.BR fbm (1)
+and
+.BR ppm (5)
+.SH AUTHORS
+Klaus Ehrenfried (klaus.ehrenfried@tu-berlin.de).
+Release of January 2002.
+.LP
+http://vento.pi.tu-berlin.de/fli.html
+.\" end of man page

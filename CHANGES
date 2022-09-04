@@ -1,0 +1,20 @@
+Changes `ppm2fli_b1.92' --> `ppm2fli_2.0d':
+
+1.) On some DEC systems the popen call failed due to a "b" in the mode
+    specifier of a `popen' statement. Because of that the reading through a 
+    filter could not be used. With the current version the filter options
+    should also work on DEC systems.
+
+2.) When reading raw PBM data (black/white) and the image width was not
+    a multiple of eight, the pictures became currupted in the old version.
+    The input of raw PBM is modified now, so that PBM images with an odd
+    width should work too.
+
+3.) The output section of the `unflick' program was changed, so that now
+    different external filters can be used for writing the file. The old 
+    version allowed only `gzip' and `compress'.
+
+Changes `ppm2fli_2.0d' ---> `ppm2fli-2.1'
+
+No functional changes. Now distribution of the software under the terms of 
+the GNU General Public License. 
