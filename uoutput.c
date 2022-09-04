@@ -122,7 +122,9 @@ int out_image
   struct stat  statbuf; 
   char out_name[MAX_LEN];
   char digiter[MAX_LEN];
-  unsigned char *red, *green, *blue, *pp, *zz, *wbuff;
+  unsigned char *red, *green, *blue, *pp;
+  char *zz;
+  char *wbuff;
   int m,n,i,j,ic, len, zsize;
   int fbm_planes, fbm_bits, fbm_physbits;
   int fbm_rowlen, fbm_plnlen, fbm_clrlen;

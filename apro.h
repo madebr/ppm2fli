@@ -133,7 +133,7 @@ int output_palette();
 int read_image(PMS *image, char *file_name);
 int free_pms(PMS *image);
 int check_exist(char *file_name);
-int read_raw(FILE *fp, char *buffer, int len);
+int read_raw(FILE *fp, unsigned char *buffer, int len);
 
 int get_fbm_data(PMS *image, FILE *fp);
 int get_ppm_data(PMS *image, FILE *fp, int type);

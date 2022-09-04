@@ -150,7 +150,7 @@ int read_image(PMS *image, char *file_name)
  * read_raw
  ****************************************************************/
 
-int read_raw(FILE *fp, char *buffer, int len)
+int read_raw(FILE *fp, unsigned char *buffer, int len)
 {
   int k;
 
