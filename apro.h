@@ -77,7 +77,7 @@ typedef struct image_store_struct
 
 /* main or not */
 
-#ifdef MAIN
+#ifndef MAIN
 #define EXT extern
 #else
 #define EXT
